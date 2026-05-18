@@ -1,0 +1,305 @@
+:root {
+  --bg: #ffffff;
+  --sidebar: #202733;
+  --sidebar-text: #e8edf3;
+  --sidebar-muted: #aab4c2;
+  --text: #202124;
+  --muted: #5f6368;
+  --line: #e4e7eb;
+  --link: #2472b8;
+  --placeholder: #f2f4f7;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.site-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 270px;
+  padding: 34px 24px 28px;
+  background: var(--sidebar);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.profile {
+  text-align: center;
+}
+
+.portrait {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.placeholder {
+  background:
+    linear-gradient(135deg, transparent 49%, rgba(0, 0, 0, 0.08) 50%, transparent 51%),
+    linear-gradient(45deg, transparent 49%, rgba(0, 0, 0, 0.08) 50%, transparent 51%),
+    var(--placeholder);
+}
+
+.profile h1 {
+  margin: 0 0 8px;
+  font-size: 27px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.profile p {
+  margin: 3px 0;
+  color: var(--sidebar-muted);
+  font-size: 14px;
+}
+
+.profile .role {
+  color: var(--sidebar-text);
+}
+
+.site-nav {
+  display: grid;
+  gap: 2px;
+  margin: 34px 0;
+}
+
+.site-nav a {
+  padding: 8px 10px;
+  border-radius: 3px;
+  color: var(--sidebar-muted);
+  font-size: 15px;
+}
+
+.site-nav a:hover,
+.site-nav a.active {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.social-links {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  justify-content: center;
+}
+
+.social-links a {
+  color: var(--sidebar-muted);
+  font-size: 13px;
+}
+
+.social-links a[href=""] {
+  color: rgba(170, 180, 194, 0.58);
+}
+
+.content {
+  max-width: 980px;
+  margin-left: 270px;
+  padding: 48px 54px 72px;
+}
+
+.topline {
+  margin-bottom: 34px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.topline h2 {
+  margin: 0 0 10px;
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.topline p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.cv-section {
+  padding: 18px 0 30px;
+  border-bottom: 1px solid var(--line);
+}
+
+.cv-section h2 {
+  margin: 0 0 16px;
+  font-size: 25px;
+  line-height: 1.25;
+}
+
+.cv-section h3 {
+  margin: 24px 0 8px;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.cv-section p {
+  margin: 0 0 11px;
+}
+
+.cv-section ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.cv-section li {
+  min-height: 1.65em;
+  margin: 3px 0;
+}
+
+.news-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.news-list li {
+  display: grid;
+  grid-template-columns: 74px 1fr;
+  gap: 12px;
+}
+
+.news-list span {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.entry {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.compact-entry {
+  margin: 10px 0;
+}
+
+.entry strong {
+  font-weight: 700;
+}
+
+.entry p {
+  margin: 2px 0 0;
+  color: var(--muted);
+}
+
+.entry span {
+  flex: 0 0 auto;
+  color: var(--muted);
+}
+
+.research-item {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 22px;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+
+.research-item:first-of-type {
+  border-top: 0;
+}
+
+.thumb {
+  width: 180px;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--line);
+}
+
+.research-item h3 {
+  margin: 0 0 5px;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.authors,
+.links {
+  color: var(--muted);
+}
+
+.links a[href=""] {
+  color: rgba(36, 114, 184, 0.45);
+}
+
+@media (max-width: 860px) {
+  .site-sidebar {
+    position: static;
+    width: 100%;
+    padding: 22px 18px;
+  }
+
+  .portrait {
+    width: 112px;
+    height: 112px;
+  }
+
+  .site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 22px 0 14px;
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 30px 20px 56px;
+  }
+
+  .research-item {
+    grid-template-columns: 1fr;
+  }
+
+  .thumb {
+    width: 100%;
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 520px) {
+  .content {
+    padding-inline: 16px;
+  }
+
+  .entry {
+    display: block;
+  }
+
+  .entry span {
+    display: block;
+    margin-top: 3px;
+  }
+
+  .news-list li {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
