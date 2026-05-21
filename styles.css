@@ -268,12 +268,20 @@ a:hover {
 }
 
 .thumb {
+  position: relative;
   width: 190px;
   aspect-ratio: 4 / 3;
   border: 1px solid var(--line);
   border-radius: 10px;
   box-shadow: 0 8px 18px rgba(20, 31, 47, 0.06);
   overflow: hidden;
+}
+
+.thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .research-item h3 {
