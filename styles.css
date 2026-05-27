@@ -33,7 +33,6 @@ body {
     "Inter", "Aptos", "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   font-size: 16px;
   line-height: 1.72;
-  text-align: center;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -58,7 +57,6 @@ a:hover {
   color: var(--sidebar-text);
   display: flex;
   flex-direction: column;
-  align-items: center;
   overflow-y: auto;
   box-shadow: 8px 0 30px rgba(17, 24, 39, 0.14);
 }
@@ -103,29 +101,27 @@ a:hover {
 
 .site-nav {
   display: grid;
-  justify-items: center;
   gap: 4px;
-  width: 100%;
   margin: 36px 0;
 }
 
 .site-nav a {
   padding: 9px 11px;
-  width: 100%;
   border-radius: 7px;
   color: var(--sidebar-muted);
   font-size: 15px;
   font-weight: 560;
-  text-align: center;
   transition:
     background 160ms ease,
-    color 160ms ease;
+    color 160ms ease,
+    transform 160ms ease;
 }
 
 .site-nav a:hover,
 .site-nav a.active {
   background: rgba(255, 255, 255, 0.12);
   color: #ffffff;
+  transform: translateX(2px);
   text-decoration: none;
 }
 
@@ -149,11 +145,8 @@ a:hover {
 
 .content {
   max-width: 1020px;
-  width: min(1020px, calc(100% - 288px));
-  margin-left: calc(288px + max(0px, (100vw - 288px - 1020px) / 2));
-  margin-right: 0;
+  margin-left: 288px;
   padding: 54px 60px 78px;
-  text-align: center;
 }
 
 .topline {
@@ -213,8 +206,7 @@ a:hover {
 
 .cv-section ul {
   margin: 0;
-  padding-left: 0;
-  list-style-position: inside;
+  padding-left: 20px;
 }
 
 .cv-section li {
@@ -228,24 +220,21 @@ a:hover {
 }
 
 .news-list li {
-  display: block;
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 14px;
   padding: 6px 0;
-  text-align: center;
 }
 
 .news-list span {
-  display: block;
   color: var(--link);
   font-weight: 700;
 }
 
 .entry {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  text-align: center;
+  justify-content: space-between;
+  gap: 24px;
 }
 
 .compact-entry {
@@ -287,12 +276,11 @@ a:hover {
 
 .research-item > div:not(.thumb) {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) max-content;
+  column-gap: 26px;
   row-gap: 5px;
   align-items: start;
-  justify-items: center;
   min-width: 0;
-  text-align: center;
 }
 
 .thumb {
@@ -315,7 +303,6 @@ a:hover {
 .research-item h3 {
   grid-column: 1;
   margin: 0 0 6px;
-  max-width: 800px;
   font-size: 18.5px;
   line-height: 1.34;
   font-weight: 750;
@@ -324,13 +311,12 @@ a:hover {
 .research-item > div:not(.thumb) > p {
   grid-column: 1;
   margin: 0;
-  max-width: 800px;
 }
 
 .research-item > div:not(.thumb) > p:nth-of-type(2) {
-  grid-column: 1;
-  grid-row: auto;
-  justify-self: center;
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  justify-self: end;
   margin-top: 2px;
   padding: 2px 10px;
   border-radius: 999px;
@@ -362,7 +348,6 @@ a:hover {
   flex-wrap: wrap;
   gap: 8px;
   align-items: center;
-  justify-content: center;
   margin-top: 8px;
 }
 
@@ -407,10 +392,6 @@ a:hover {
     margin: 22px 0 14px;
   }
 
-  .site-nav a {
-    width: auto;
-  }
-
   .site-nav a:hover,
   .site-nav a.active {
     transform: none;
@@ -418,7 +399,6 @@ a:hover {
 
   .content {
     margin-left: 0;
-    width: 100%;
     padding: 26px 20px 56px;
   }
 
@@ -467,7 +447,7 @@ a:hover {
   .research-item > div:not(.thumb) > p:nth-of-type(2) {
     grid-column: 1;
     grid-row: auto;
-    justify-self: center;
+    justify-self: start;
     margin: 0 0 2px;
   }
 }
