@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Link Click Statistics | Fangyu Sun</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="stats-page" data-page="stats">
+    <main class="content stats-content">
+      <header class="topline stats-header">
+        <p class="stats-kicker"><a href="./index.html" data-no-track>Homepage</a></p>
+        <h1>Link Click Statistics</h1>
+        <p>Counts for publication links, profiles, email, code, and project links on the academic homepage.</p>
+      </header>
+
+      <section class="cv-section">
+        <div class="stats-section-heading">
+          <div>
+            <h2>Remote Site Counts</h2>
+            <p id="remote-status" class="status-line">Loading remote statistics...</p>
+          </div>
+        </div>
+
+        <div class="stats-strip" aria-label="Remote statistics summary">
+          <div>
+            <span id="remote-total-clicks">0</span>
+            <small>Total clicks</small>
+          </div>
+          <div>
+            <span id="remote-link-count">0</span>
+            <small>Clicked links</small>
+          </div>
+        </div>
+
+        <div class="stats-table-wrap">
+          <table class="stats-table">
+            <thead>
+              <tr>
+                <th>Link</th>
+                <th>Section</th>
+                <th>Clicks</th>
+                <th>Last clicked</th>
+              </tr>
+            </thead>
+            <tbody id="remote-stats-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="cv-section">
+        <div class="stats-section-heading">
+          <div>
+            <h2>This Browser</h2>
+            <p class="status-line">Last updated <span id="local-updated-at">-</span></p>
+          </div>
+          <div class="stats-toolbar">
+            <button id="export-local-stats" class="button" type="button">Export JSON</button>
+            <button id="reset-local-stats" class="button button-secondary" type="button">Reset</button>
+          </div>
+        </div>
+
+        <div class="stats-strip" aria-label="Local statistics summary">
+          <div>
+            <span id="local-total-clicks">0</span>
+            <small>Total clicks</small>
+          </div>
+          <div>
+            <span id="local-link-count">0</span>
+            <small>Clicked links</small>
+          </div>
+        </div>
+
+        <div class="stats-table-wrap">
+          <table class="stats-table">
+            <thead>
+              <tr>
+                <th>Link</th>
+                <th>Section</th>
+                <th>Clicks</th>
+                <th>Last clicked</th>
+              </tr>
+            </thead>
+            <tbody id="local-stats-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="./analytics-config.js"></script>
+    <script src="./link-stats.js"></script>
+  </body>
+</html>
