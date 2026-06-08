@@ -326,9 +326,8 @@
     if (element) element.textContent = text;
   }
 
-  function renderHomePageViews(total, source) {
+  function renderHomePageViews(total) {
     setText("homepage-visit-count", Number(total || 0).toLocaleString());
-    setText("homepage-visit-source", source);
   }
 
   function pageViewsFromSummary(data) {
@@ -408,20 +407,20 @@
     const explicitOffset = Number(settings.historicalOffset || 0);
     const fallbackTotal = localTotal + explicitOffset;
 
-    renderHomePageViews(fallbackTotal, offset ? "Syncing total + history" : "Syncing total");
+    renderHomePageViews(fallbackTotal);
 
     fetchCounterJson(settings.hitUrl)
       .then((data) => {
         const remoteTotal = counterValue(data);
         if (!Number.isFinite(remoteTotal)) throw new Error("Counter response did not include a value.");
 
-        renderHomePageViews(remoteTotal + offset, offset ? "Site-wide + history" : "Site-wide");
+        renderHomePageViews(remoteTotal + offset);
       })
       .catch((error) => {
         debug("Remote total views counter failed", error);
 
         if (!settings.getUrl) {
-          renderHomePageViews(fallbackTotal, offset ? "This browser + history" : "This browser");
+          renderHomePageViews(fallbackTotal);
           return;
         }
 
@@ -430,10 +429,10 @@
             const remoteTotal = counterValue(data);
             if (!Number.isFinite(remoteTotal)) throw new Error("Counter response did not include a value.");
 
-            renderHomePageViews(remoteTotal + offset, offset ? "Site-wide + history" : "Site-wide");
+            renderHomePageViews(remoteTotal + offset);
           })
           .catch(() => {
-            renderHomePageViews(fallbackTotal, offset ? "This browser + history" : "This browser");
+            renderHomePageViews(fallbackTotal);
           });
       });
 
@@ -606,11 +605,11 @@
 
           const remoteTotal = pageViewsFromSummary(data);
           if (remoteTotal > 0 || localTotal === 0) {
-            renderHomePageViews(remoteTotal, "Site-wide");
+            renderHomePageViews(remoteTotal);
           }
         },
         () => {
-          renderHomePageViews(localTotal, "This browser");
+          renderHomePageViews(localTotal);
         },
       );
     }, 1200);
@@ -629,7 +628,7 @@
 
     if (initTotalViewsCounter(localHistory, localTotal)) return;
 
-    renderHomePageViews(localTotal, config.endpoint ? "This browser, syncing" : "This browser");
+    renderHomePageViews(localTotal);
     loadRemoteHomePageViews(localTotal);
   }
 
