@@ -23,13 +23,15 @@ http://127.0.0.1:8000/index.html
 
 ## Link Click Statistics
 
-- `link-stats.js`: tracks non-empty, non-anchor link clicks.
-- `index.html`: displays homepage visit counts at the bottom of the page.
-- `analytics-config.js`: public config for the statistics endpoint.
+- `link-stats.js`: tracks non-empty, non-anchor link clicks and homepage visits.
+- `index.html`: displays total homepage visits at the bottom of the page.
+- `analytics-config.js`: public config for link statistics and total visit counting.
 - `stats.html`: click-count dashboard. Open `http://127.0.0.1:8000/stats.html` locally.
 - `tools/click-stats-apps-script.gs`: optional Google Sheets backend for site-wide counts.
 
-Without a remote endpoint, counts are stored only in the current browser. To enable site-wide counts on GitHub Pages:
+Homepage total visits use the public `totalViews.hitUrl` counter in `analytics-config.js`. To add known historical traffic, set `totalViews.historicalOffset` to that number. When `includeLocalHistory` is true, each browser also preserves its existing local homepage-view count as a one-time history offset after the upgrade.
+
+Without a Google Apps Script endpoint, link-click counts are stored only in the current browser. To enable site-wide link-click counts on GitHub Pages:
 
 1. Create a Google Sheet.
 2. Open Extensions -> Apps Script.

@@ -5,6 +5,7 @@
     {
       siteId: window.location.hostname || "local",
       endpoint: "",
+      totalViews: null,
       storageKey: "academic-link-click-stats-v1",
       debug: false,
     },
@@ -339,6 +340,106 @@
     return Number(data.totalPageViews || 0);
   }
 
+  function totalViewsSettings() {
+    return Object.assign(
+      {
+        hitUrl: "",
+        getUrl: "",
+        historicalOffset: 0,
+        includeLocalHistory: false,
+      },
+      config.totalViews || {},
+    );
+  }
+
+  function totalViewsMigrationKey(settings) {
+    return `${config.storageKey}-total-views-migration-${settings.key || hashString(settings.hitUrl || "total")}`;
+  }
+
+  function localHistoryOffset(settings, localHistory) {
+    const explicitOffset = Number(settings.historicalOffset || 0);
+
+    if (!settings.includeLocalHistory) return explicitOffset;
+
+    const previousLocalViews = Math.max(0, Number(localHistory || 0));
+    const migrationKey = totalViewsMigrationKey(settings);
+
+    try {
+      const existing = JSON.parse(window.localStorage.getItem(migrationKey));
+      if (existing && existing.version === 1) {
+        return explicitOffset + Number(existing.localHistory || 0);
+      }
+
+      window.localStorage.setItem(
+        migrationKey,
+        JSON.stringify({
+          version: 1,
+          localHistory: previousLocalViews,
+          createdAt: new Date().toISOString(),
+        }),
+      );
+    } catch (error) {
+      debug("Could not persist total views migration state", error);
+    }
+
+    return explicitOffset + previousLocalViews;
+  }
+
+  function counterValue(data) {
+    if (!data) return NaN;
+
+    const value = Number(data.value ?? data.count ?? data.total);
+    return Number.isFinite(value) ? value : NaN;
+  }
+
+  function fetchCounterJson(url) {
+    return window.fetch(url, { cache: "no-store" }).then((response) => {
+      if (!response.ok) throw new Error(`Counter request failed: ${response.status}`);
+      return response.json();
+    });
+  }
+
+  function initTotalViewsCounter(localHistory, localTotal) {
+    const settings = totalViewsSettings();
+
+    if (!settings.hitUrl) return false;
+
+    const offset = localHistoryOffset(settings, localHistory);
+    const explicitOffset = Number(settings.historicalOffset || 0);
+    const fallbackTotal = localTotal + explicitOffset;
+
+    renderHomePageViews(fallbackTotal, offset ? "Syncing total + history" : "Syncing total");
+
+    fetchCounterJson(settings.hitUrl)
+      .then((data) => {
+        const remoteTotal = counterValue(data);
+        if (!Number.isFinite(remoteTotal)) throw new Error("Counter response did not include a value.");
+
+        renderHomePageViews(remoteTotal + offset, offset ? "Site-wide + history" : "Site-wide");
+      })
+      .catch((error) => {
+        debug("Remote total views counter failed", error);
+
+        if (!settings.getUrl) {
+          renderHomePageViews(fallbackTotal, offset ? "This browser + history" : "This browser");
+          return;
+        }
+
+        fetchCounterJson(settings.getUrl)
+          .then((data) => {
+            const remoteTotal = counterValue(data);
+            if (!Number.isFinite(remoteTotal)) throw new Error("Counter response did not include a value.");
+
+            renderHomePageViews(remoteTotal + offset, offset ? "Site-wide + history" : "Site-wide");
+          })
+          .catch(() => {
+            renderHomePageViews(fallbackTotal, offset ? "This browser + history" : "This browser");
+          });
+      });
+
+    return true;
+  }
+
   function normalizeRows(rows) {
     if (!rows) return [];
 
@@ -518,11 +619,16 @@
   function initHomePageStats() {
     if (!document.getElementById("homepage-visit-count")) return;
 
+    const beforeStore = loadStore();
+    const localHistory = beforeStore.homePageViews.total;
     const eventData = buildPageViewEvent();
     const store = recordLocalPageView(eventData);
     const localTotal = store.homePageViews.total;
 
     sendRemote(eventData);
+
+    if (initTotalViewsCounter(localHistory, localTotal)) return;
+
     renderHomePageViews(localTotal, config.endpoint ? "This browser, syncing" : "This browser");
     loadRemoteHomePageViews(localTotal);
   }
