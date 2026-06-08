@@ -5,7 +5,7 @@ window.AcademicLinkStatsConfig = {
     key: "ccsunfy_github_io_homepage_visits",
     hitUrl: "https://countapi.mileshilliard.com/api/v1/hit/ccsunfy_github_io_homepage_visits",
     getUrl: "https://countapi.mileshilliard.com/api/v1/get/ccsunfy_github_io_homepage_visits",
-    historicalOffset: 0,
+    historicalOffset: 200,
     includeLocalHistory: true,
   },
   storageKey: "academic-link-click-stats-v1",
