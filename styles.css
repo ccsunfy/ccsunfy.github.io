@@ -241,6 +241,23 @@ a:hover {
   margin: 10px 0;
 }
 
+.entry-with-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.company-logo {
+  width: 96px;
+  height: 32px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: #101820;
+}
+
 .entry strong {
   font-weight: 700;
 }
@@ -622,6 +639,12 @@ a:hover {
   .entry span {
     display: block;
     margin-top: 3px;
+  }
+
+  .entry-with-logo {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
   }
 
   .news-list li {
